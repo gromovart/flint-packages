@@ -1,0 +1,18 @@
+apiVersion: harness/connections/v1
+kind: Connection
+spec:
+  name: flint-demo-ping
+  description: Локальный синтетический MCP-инструмент demo.ping без сети и секретов.
+  transport:
+    type: mcp-stdio
+    command: /usr/bin/env
+    args:
+    - "python3"
+    - "-u"
+    - "-c"
+    - "exec('\"\"\"Synthetic MCP stdio server: a constant result, no files or network.\"\"\"\\nimport json\\nimport sys\\n\\nfor line in sys.stdin:\\n    request = json.loads(line)\\n    if \"id\" not in request:\\n        continue\\n    method = request.get(\"method\")\\n    params = request.get(\"params\", {})\\n    response = {\"jsonrpc\": \"2.0\", \"id\": request[\"id\"]}\\n    if method == \"initialize\":\\n        response[\"result\"] = {\\n            \"protocolVersion\": params.get(\"protocolVersion\", \"2025-03-26\"),\\n            \"capabilities\": {\"tools\": {}},\\n            \"serverInfo\": {\"name\": \"flint-demo\", \"version\": \"1.0.0\"}}\\n    elif method == \"ping\":\\n        response[\"result\"] = {}\\n    elif method == \"tools/list\":\\n        response[\"result\"] = {\"tools\": [{\\n            \"name\": \"demo.ping\", \"description\": \"Return the fixed marker FLINT_DEMO_OK.\",\\n            \"inputSchema\": {\"type\": \"object\", \"properties\": {}, \"additionalProperties\": False}}]}\\n    elif method == \"tools/call\" and params.get(\"name\") == \"demo.ping\" and params.get(\"arguments\", {}) == {}:\\n        response[\"result\"] = {\"content\": [{\"type\": \"text\", \"text\": \"FLINT_DEMO_OK\"}]}\\n    else:\\n        response[\"error\"] = {\"code\": -32601, \"message\": \"Unsupported method, tool or arguments\"}\\n    print(json.dumps(response), flush=True)\\n')"
+  read:
+  - demo.ping
+  write: []
+  required: false
+  timeout: 5

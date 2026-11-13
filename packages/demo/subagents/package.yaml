@@ -1,0 +1,7 @@
+apiVersion: harness/subagents/v1
+kind: SubagentPackage
+spec:
+  id: flint/demo-subagents
+  version: 1.0.0
+  subagents:
+    flint-demo-reviewer: subagents/flint-demo-reviewer

@@ -1,0 +1,7 @@
+apiVersion: harness/workflows/v1
+kind: WorkflowPackage
+spec:
+  id: flint/demo-workflows
+  version: 1.0.0
+  workflows:
+    flint-demo-check: workflows/flint-demo-check

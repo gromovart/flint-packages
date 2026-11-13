@@ -1,0 +1,7 @@
+apiVersion: harness/skills/v1
+kind: SkillPackage
+spec:
+  id: flint/demo-skills
+  version: 1.0.0
+  skills:
+    flint-demo: skills/flint-demo

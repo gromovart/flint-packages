@@ -1,0 +1,7 @@
+apiVersion: harness/hooks/v1
+kind: HookPackage
+spec:
+  id: flint/demo-hooks
+  version: 1.0.0
+  hooks:
+    flint-demo-note: hooks/flint-demo-note
